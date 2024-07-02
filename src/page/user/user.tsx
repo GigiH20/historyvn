@@ -10,13 +10,16 @@ const UserAvatar = ({ src }: { src: string }) => {
   );
 };
 
-const UserInfo = () => {
+const UserInfo = ({account}:any) => {
   return (
     <div className="user-info">
       <ul className="info">
-        <li>Linh Nguyen</li>
-        <li>Địa chỉ ví: 0x00000000fjdijfsjgmkbd00239</li>
-        <li>Phần thưởng đã nhận: 100 LH</li>
+        <li>
+          <span>{account.first_name}</span>
+          <span>{account.last_name}</span>
+        </li>
+        <li>Địa chỉ ví: {account.address}</li>
+        <li>Phần thưởng đã nhận: {account.balance} LH</li>
         <li>Danh hiệu: Thám Hoa</li>
         <li>Hạng 1/1 người học</li>
       </ul>
@@ -24,12 +27,12 @@ const UserInfo = () => {
   );
 };
 
-const UserOveral: React.FC<Props> = () => {
+const UserOveral = ({account}:any) => {
   return (
     <>
       <div className="user-info-wrapper">
-        <UserAvatar src="./user_avatar.png" />
-        <UserInfo></UserInfo>
+        <UserAvatar src={account.avatar} />
+        <UserInfo account = {account}></UserInfo>
       </div>
     </>
   );

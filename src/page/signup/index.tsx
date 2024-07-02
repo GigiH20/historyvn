@@ -67,7 +67,7 @@ const FormSignIn: React.FC<FormSignUpProps> = ({ onFinish }) => (
       <Button type="primary" htmlType="submit" className="login-form-button">
         Log in
       </Button>
-      Bạn đã có tài khoản? <a href="/signup">Đăng nhập ngay</a>
+      Bạn đã có tài khoản? <a href="/signin">Đăng nhập ngay</a>
     </Form.Item>
   </Form>
 );
@@ -112,7 +112,7 @@ const SignUp = () => {
       <div className="login-img">
         <img src="./logIn.png" alt="Login" />
       </div>
-      <Button onClick={() => console.log("[check account metamask]", account)}>test</Button>
+      {/* <Button onClick={() => console.log("[check account metamask]", account)}>test</Button> */}
     </div>
   );
 };

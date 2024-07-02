@@ -1,9 +1,10 @@
 import React from "react";
 import type { FormProps } from "antd";
-import { Button, Checkbox, Typography, Form, Input, Space } from "antd";
+import { Button, Checkbox, Typography, Form, Input, Space, message } from "antd";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useSDK } from "@metamask/sdk-react";
-import { signinRequest } from "../../service/auth";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { signIn } from "./signInSlice";
 import "./index.css";
 
 type FieldType = {
@@ -57,6 +58,8 @@ const FormSignIn: React.FC<FormSignInProps> = ({onFinish}) => (
 );
 const SignIn = () => {
   const { account} = useSDK();
+  const dispatch = useAppDispatch()
+  const auth = useAppSelector(state => state.auth)
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     let acconutInfo = { 
@@ -64,9 +67,15 @@ const SignIn = () => {
       password: values.password,
       address: account
     }
-    // console.log("Success:", values);
-    signinRequest(acconutInfo)
-  };
+    dispatch(signIn(acconutInfo)).unwrap().then((data:any) => {
+      if(data) { 
+        console.log("SignIn: navigate /", data);
+        // navigate("/")
+      }
+    }).catch((ex:any) => { 
+      message.error("Dang nhap loi", ex)
+    })
+  }; 
   return (
     <div className="signin-wrapper">
       <Space className="signin-form" direction="vertical" size='large'>

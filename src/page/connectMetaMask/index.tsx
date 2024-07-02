@@ -71,7 +71,7 @@ const ConnectPage: React.FC<Props> = () => {
     <div className="connect-wrapper">
       <Connect />
       <ConnectButton connect={connect} />
-      <Button onClick={() => console.log("check jwt", localStorage.getItem('cjwt') )}></Button>
+      {/* <Button onClick={() => console.log("check jwt", localStorage.getItem('cjwt') )}></Button> */}
     </div>
   );
 };

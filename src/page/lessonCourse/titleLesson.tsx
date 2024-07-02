@@ -1,20 +1,39 @@
 import React from "react";
-interface Props {}
-const TitleLesson: React.FC<Props> = () => {
+import { IChapter } from "../../type/IChapter";
+import { ICourse } from "../../type/ICourse";
+import { Button } from "antd";
+import { userEnrolledCourse } from "../../service/course";
+interface Props {
+  data: ICourse;
+}
+const TitleLesson: React.FC<Props> = (props: Props) => {
+  let { data } = props;
+  const enrolledCourse = () => { 
+    userEnrolledCourse(data.id)
+  }
   return (
     <div className="title-wrapper">
       <div className="title">
-        <span>Nhà Hồ</span>
+        <span>{data.title}</span>
       </div>
       <div className="title-description">
-        <span>
-          Nhà Hồ (1400-1407): quốc hiệu Đại Ngu, kinh đô Tây Đô (Thanh Hóa) Nhà
-          Hồ bắt đầu khi Hồ Quý Ly lên ngôi năm 1400 sau khi giành được quyền
-          lực từ tay nhà Trần và chấm dứt khi Hồ Hán Thương bị quân Minh bắt vào
-          năm 1407 – tổng cộng là 7 năm. Quốc hiệu Đại Việt đã đổi thành Đại
-          Ngu năm 1400.
-        </span>
+        <span>{data.description}</span>
       </div>
+      <div className="enroll-course">
+        <div className="enroll-course-price">
+          <div className="enroll-text">
+            <span>
+            {data.price > 0 ? data.price : "Free"}
+            </span>
+          </div>
+          <div>
+            <Button className="enroll-button">
+            Đăng ký học ngay
+            </Button>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };

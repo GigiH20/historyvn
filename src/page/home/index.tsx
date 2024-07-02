@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./index.css";
 import { Typography, Button } from "antd";
 import SearchComp from "../../component/search";
@@ -6,14 +6,32 @@ import Lesson from "./lesson";
 import Post from "./post";
 import Rank from "../../component/rank";
 import { useSDK } from "@metamask/sdk-react";
+import {getAllCourse} from "../../service/course";
+import { useNavigate } from "react-router-dom";
+import { ICourse } from "../../type/ICourse";
 
 interface Props {}
 
 const HomePage: React.FC<Props> = () => {
+  const navigate = useNavigate()
   const { sdk, connected, connecting,account, provider, chainId} = useSDK();
-  const onClick =() => { 
-    console.log('check is connected', account, connected)
+  const [course, setCourse] = useState<ICourse[]>([])
 
+  useEffect(() => {
+    fetchAllCourse();
+  }, []);
+  const fetchAllCourse = async () => {
+    try {
+      const fetchCourses = await getAllCourse();
+      const courses =  fetchCourses.data;
+      console.log('[course at get func]', courses);
+      setCourse(courses);
+    } catch (error) {
+      console.error("Error fetching courses: ", error);
+    }
+  };
+  const buttonClearJWT = () => { 
+    const token = localStorage.removeItem("cjwt");
   }
   return (
     <div >
@@ -35,10 +53,10 @@ const HomePage: React.FC<Props> = () => {
       </div>
       <div className="content-home">
             <SearchComp className="search-comp"/>
-            <Lesson/>
+            <Lesson data = {course}/>
             <Post/>
             <Rank/>
-            <Button onClick={onClick}>Check</Button>
+            <Button onClick={() => console.log('[state course]' , course)}>CHeck all course </Button>
       </div>
     </div>
   );

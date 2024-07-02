@@ -17,9 +17,9 @@ const HistorySection: React.FC<Props> = () => {
         </div>
       </div>
       <div className="row-2">
-        <img src="./courseimg1.png" alt="Course 1" className="course-image" />
-        <img src="./courseImg2.png" alt="Course 2" className="course-image" />
-        <img src="./courseImg3.png" alt="Course 3" className="course-image" />
+        <img src="../courseimg1.png" alt="Course 1" className="course-image" />
+        <img src="../courseImg2.png" alt="Course 2" className="course-image" />
+        <img src="../courseImg3.png" alt="Course 3" className="course-image" />
       </div>
       <div className="row-3">
         <Space>
