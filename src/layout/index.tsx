@@ -8,14 +8,16 @@ import {
   MailFilled,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+// import { signIn } from "./signInSlice";
 
 import "./index.css";
+import { authSlice } from "../page/signin/signInSlice";
 const { Header, Content, Footer } = Layout;
 const { Text, Title } = Typography;
 
 const App: React.FC = () => {
   const navigate = useNavigate();
-
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -23,7 +25,7 @@ const App: React.FC = () => {
     {
       key: 1,
       label: "Trang chủ",
-      onClick: () => navigate('/')
+      onClick: () => navigate('/home')
     },
     {
       key: 2,
@@ -32,28 +34,35 @@ const App: React.FC = () => {
     },
     {
       key: 3,
+      label: 'Diễn đàn',
+      onClick: () => navigate('/blog')
+    },
+    {
+      key: 4,
       label: "Chia sẻ",
       onClick: () => navigate('/share')
     },
     {
-      key: 4,
+      key: 5,
       label: "Bảng xếp hạng",
       onClick: () => navigate('/chart')
     },
     {
-      key: 5,
+      key: 6,
       label: "Về tôi",
       onClick: () => navigate('/user')
     },
+
   ];
-//check is login
+const token = localStorage.getItem("cjwt")
+let localAccount = localStorage.getItem("account") as any;
+let account = JSON.parse(localAccount);
   useEffect(() => {
-    const token = localStorage.getItem("cjwt")
     console.log("token",token)
     if (!token) { 
       navigate('/signin')
     }
-  }, [])
+  }, [token])
 
   return (
     <Layout>
@@ -71,14 +80,15 @@ const App: React.FC = () => {
           items={items}
           style={{ flex: 1, minWidth: 0 }}
         />
-        <Button type="text">Đăng ký</Button>
-        <Button type="text">Đăng nhập</Button>
+        <div className="user">
+          <img src={account.avatar} width='50px' height='50px'/>
+          {account.last_name} {account.first_name}
+        </div>
       </Header>
       <Content>
         <div
           style={{
             background: colorBgContainer,
-            // minHeight: 280,
             paddingTop: 12,
             borderRadius: borderRadiusLG,
           }}

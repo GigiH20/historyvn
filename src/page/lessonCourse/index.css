@@ -31,10 +31,8 @@
   .title-description {
     width: 50%;
     span {
-
-      width: 1019px;
+      width: 100%;
       height: 144px;
-
       font-family: "Be Vietnam Pro";
       font-style: normal;
       font-weight: 400;
@@ -50,7 +48,7 @@
 
 .lesson-bigthumb {
   display: flex;
-  flex-direction: row;
+  flex-direction: column  ;
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
@@ -58,6 +56,26 @@
     border-radius: 10px;
     width: 1280px;
     height: 649px;
+  }
+  .icon-info {
+    padding: 10px 40px 10px 40px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 10px 0; 
+  }
+  
+  .icon-info-text {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;    
+  }
+  
+  .icon-info-text span {
+    font-size: 18px;
+    margin-top: 5px; 
+    margin-left: 15px;
+    font-family: 'Be Vietnam Pro';
   }
 }
 .item-card-wrapper {
@@ -92,9 +110,38 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  text-align: left;
   height: fit-content;
+  font-family: "Be Vietnam Pro";
+  .story-title{ 
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+  }
   .title span{ 
     font-weight: bold;
     font-size: large;
+  }
+}
+.enroll-course{ 
+  display: flex;
+  flex-direction: column ;
+  .enroll-course-price{ 
+    .enroll-text{ 
+      text-align: center;
+      span{ 
+        font-family: 'Be Vietnam Pro';
+        font-size: 32px;
+        font-weight: 800;
+        color: #FF9500;
+      }
+    }
+    .enroll-button{ 
+      background-color: #FF9500;
+      color: white;
+      font-family: "Be Vietnam Pro";
+      font-size: 18px;
+
+    }
   }
 }

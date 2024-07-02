@@ -1,0 +1,47 @@
+.detail-post-wrapper {
+    margin: 40px 100px 40px 100px;
+    display: flex;
+    flex-direction: column;
+    .detail-post-info{ 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .detail-post-title{ 
+            span{ 
+                font-family: 'Montserrat';
+                font-weight: 600;
+                font-size: 30px;
+            }
+        .detail-post-time{ 
+            span{ 
+                font-family: 'Lexend';
+                font-weight: 300;
+                font-size: 14px;
+            }
+        }
+        }
+    }
+    .detail-post-content{ 
+        margin-top: 20px;
+        margin-bottom: 20px;
+        span{ 
+            font-family: 'Lexend';
+        }
+    }
+}
+.comment-wrapper{ 
+    display: flex;
+    flex-direction: column;
+    .comment-user{ 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        .comment-textarea{ 
+            display:flex;
+            flex-direction: column;
+            TextArea{
+                width: 50em;
+             }
+        }
+    }
+}

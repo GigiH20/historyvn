@@ -1,0 +1,53 @@
+.blog-wrapper {
+    margin: 40px 100px 40px 100px;
+    display: flex;
+    flex-direction: column;
+}
+.blog-section{ 
+    margin: 20px 10px 20px 10px;
+}
+.blog-tab{ 
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+    .blog-tab-title{ 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        span{ 
+            font-family: "Be Vietnam Pro";
+            font-weight: 700;
+            font-size: 28px;
+        }
+    }
+    .blog-post{
+        margin-top: 10px;
+        padding: 10px 10px 10px 10px;
+        border: #E6E6FA solid 1px;
+        border-radius: 8px;
+        cursor: pointer;
+        .info-blog-post{ 
+            display: flex;
+            flex-direction: column;
+            .span-title-post{ 
+                font-family: 'Be Vietnam Pro';
+                font-weight: 500;
+                font-size: 21px;
+            }
+            .span-time{ 
+                font-family: 'Be Vietnam Pro';
+                font-weight: 300;
+                font-size: 16px;
+            }
+        }
+        .content-blog-post{ 
+            margin-bottom: 10px;
+            .span-content{ 
+                font-family: 'Be Vietnam Pro';
+                font-weight: 400;
+                font-size: 16px;
+            }
+        }
+     }
+
+}

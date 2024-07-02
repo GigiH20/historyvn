@@ -1,8 +1,17 @@
 import React from "react";
 import { Input, Button, Space, Col, Row } from "antd";
 import LessonCard from "./comp/lessonCard";
+import { useNavigate } from "react-router-dom";
+import { ICourse } from "../../type/ICourse";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 const { Search } = Input;
-const Lesson = (props: any) => {
+interface LessonProps {
+  data: ICourse[];
+}
+const Lesson = (props: LessonProps) => {
+  let { data } = props;
+  const navigate = useNavigate();
   return (
     <div className="lesson-wrapper">
       <div className="title">
@@ -14,14 +23,15 @@ const Lesson = (props: any) => {
           elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget
           habitasse in velit fringilla feugiat senectus in.
         </span>
-        <Button type="primary">Xem tất cả</Button>
+        <Button type="primary" onClick={() => navigate("/course")}>
+          Xem tất cả
+        </Button>
       </div>
       <div className="lesson-card">
-          <LessonCard/>
-          <LessonCard/>
-          <LessonCard/>
-          <LessonCard/>
+        {data &&
+          data.map((lesson, index) => <LessonCard key={index} data={lesson} />)}
       </div>
+      
     </div>
   );
 };
