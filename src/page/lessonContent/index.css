@@ -1,0 +1,30 @@
+.lesson-section-wrapper {
+  margin: 40px 100px 40px 100px;
+  display: flex;
+  flex-direction: column;
+  .title-lesson-section {
+    text-align: center;
+    span {
+      font-family: "Chonburi";
+      font-size: 38px;
+    }
+  }
+  img {
+    align-self: center;
+  }
+  .lesson-section-content {
+    font-family: "Be Vietnam Pro";
+    font-size: 22px;
+  }
+  .lesson-section-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    Button{
+      background-color: #FFBF66;
+      font-family: "Montserrat";
+      font-weight: 800;
+    }
+  }
+}

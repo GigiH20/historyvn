@@ -126,20 +126,24 @@ export const getCourseById = async (info: any): Promise<any> => {
 };
 
 export const userEnrolledCourse = async (info: any): Promise<any> => {
-  return fetch(`${prefixApi}/courses/${info}/enrollCourse`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((responseData) => {
-      let { code, data, status } = responseData;
-      if (code !== 200) {
-        return status;
-      } else {
-        return responseData;
-      }
+  try {
+    const response = await fetch(`${prefixApi}/courses/${info}/enrollCourse`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${token}`,
+      },
     });
+
+    const responseData = await response.json();
+    let { code, data, status } = responseData;
+
+    if (code !== 200) {
+      return Promise.reject(data.errors);
+    } else {
+      return responseData;
+    }
+  } catch (error) {
+    throw error;
+  }
 };

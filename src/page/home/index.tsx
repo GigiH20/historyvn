@@ -56,7 +56,6 @@ const HomePage: React.FC<Props> = () => {
             <Lesson data = {course}/>
             <Post/>
             <Rank/>
-            <Button onClick={() => console.log('[state course]' , course)}>CHeck all course </Button>
       </div>
     </div>
   );

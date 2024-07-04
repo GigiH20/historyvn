@@ -19,7 +19,7 @@ import SignIn from "./page/signin";
 import SignUp from "./page/signup";
 import Blog from "./page/blog";
 import DetailPost from "./page/detailPost";
-
+import LessContent from "./page/lessonContent";
 import history from "./history";
 import CustomerRouter from "./router";
 
@@ -44,7 +44,9 @@ function App() {
               actionsBg: "#ffffff",
             },
             Button: {
-              defaultGhostColor: "#262626",
+              // defaultGhostColor: "#262626",
+              defaultHoverBorderColor: '#FFBF66',
+              defaultHoverColor	: '#FFBF66'
             },
           },
         }}
@@ -58,7 +60,8 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/course" element={<CoursePage />} />
               <Route path="/course/:id" element={<LessonCourse />} />
-              <Route path="/course/:record/test" element={<Test />} />
+              <Route path="/course/:id/lesson:lid" element={<LessContent/>}/>
+              <Route path="/course/:id/test" element={<Test />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/share" element={<SharePage />}></Route>
               <Route path="/share/article" element={<Article />}></Route>
