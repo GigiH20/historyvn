@@ -1,7 +1,10 @@
 import React from "react";
 import HistorySection from "../course/comp/historySection";
 import { Button, Card, Space } from "antd";
-interface Props {}
+import { ICourse } from "../../type/ICourse";
+interface Props {
+  data: ICourse[];
+}
 
 const Certificate = () => {
   return (
@@ -61,7 +64,8 @@ const Course = () => {
     </Card>
   );
 };
-const UserCourse: React.FC<Props> = () => {
+const UserCourse= () => {
+  // let courses = {courses}
   return (
     <div className="user-course-wrapper">
       <Course />

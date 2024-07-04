@@ -2,6 +2,7 @@ import { message } from 'antd';
 import history from '../history'
 import Post from '../page/home/post'
 import { error } from 'console';
+const token = localStorage.getItem("cjwt");
 
 const prefixApi = process.env.REACT_APP_BASE_URL; 
 export const signupRequest = async (info: any): Promise<any> => { 
@@ -77,3 +78,26 @@ export const logoutRequest = async(): Promise<any> => {
         throw (error)
     });
 }
+
+export const getUserDetail = async (): Promise<any> => {
+    try {
+      const response = await fetch(`${prefixApi}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `${token}`,
+        },
+      });
+  
+      const responseData = await response.json();
+      let { code, data, status } = responseData;
+  
+      if (code !== 200) {
+        return Promise.reject(data.errors);
+      } else {
+        return responseData;
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
