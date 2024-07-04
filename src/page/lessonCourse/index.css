@@ -95,6 +95,15 @@
       font-weight: bolder;
     }
   }
+  .ordinal-test-number{ 
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    span {
+      font-size: 3rem;
+      font-weight: bolder;
+    }
+  }
   .item-card-title {
     span {
       font-size: 1.5rem;

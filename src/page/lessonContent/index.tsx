@@ -1,38 +1,77 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import { Divider, Button } from "antd";
-import { useParams } from "react-router-dom";
-
+import { Divider, Button, notification } from "antd";
+import { useParams, useNavigate } from "react-router-dom";
+import { getLessonContentByLessonId, lessonComplete } from "../../service/lessonContent";
+import { ILessonContent } from "../../type/IChapter";
 interface Props {}
 
 const LessContent: React.FC<Props> = () => {
     const {id, lid} = useParams();
+    const navigate = useNavigate();
+    const [api, contextHolder] = notification.useNotification();
+    const [lessonContent, setLessonsContent] = useState<ILessonContent| null>(null)
+    const [imgUrl, setImgUrl] = useState<string>("");
+
+    useEffect(() => {
+        fetchLsContent()},[])
+    const fetchLsContent = async() => { 
+        let  value = {courseId:id , lId:lid} 
+        try{ 
+            const fetchLessonContent = await getLessonContentByLessonId(value)
+            const lessonContent = fetchLessonContent.data[0];
+            console.log("[lesson]", lessonContent)
+            const img = lessonContent.illustration?.split("id=")[1];
+            const newLink = `https://drive.google.com/thumbnail?id=${img}`
+            setLessonsContent(lessonContent);
+            setImgUrl(newLink)
+        } catch (error) { 
+            console.error("Error", error)
+        }
+    }
+    const completeLesson = async() => { 
+        const btn = ( 
+            <Button onClick={() => navigate(`/course/${id}`)}>Chuyển về trang bài học</Button>
+        )
+        try{ 
+            const responseData = await lessonComplete(lid);
+            const infoCompleteLesson = responseData.data;
+            api.open({ 
+                message: 'Chúc mừng',
+                description: `Chúc mừng đã ${infoCompleteLesson.enrolled_by} hoàn thành khóa học`,
+                type: 'success',
+                placement: "top",
+                btn
+            });
+        } catch (error) { 
+            api.open({ 
+                message: "Failed",
+                description: `Enroll course failed, ${error}`,
+                type: "error",
+                duration: 0,
+                placement: "top"
+
+            })
+        }
+    }
   return (
     <div className="lesson-section-wrapper">
+        {contextHolder}
       <div className="title-lesson-section">
-        <span>Tổng quan thời kỳ Hồng Bàng & Văn Lang</span>
+        <span>{lessonContent?.title}</span>
       </div>
       <Divider />
-      <img src="../nuocvanlang.png" width="1500px" height="900px" />
+      <img src={imgUrl}
+       width="1000px" height="500px"
+        />
       <div className="lesson-section-content">
         <span>
-          Lịch sử Việt Nam thời kỳ Hồng Bàng, từ Kinh Dương Vương được phong năm
-          Nhâm Tuất, cùng thời với Đế Nghi, truyền đến cuối thời vua Hùng Vương,
-          ngang với đời Noãn Vương nhà Chu năm thứ 57 [258 TCN] là năm Quý Mão
-          thì hết, tất cả 2.622 năm [2879 – 258 TCN]. Thời kỳ Hồng Bàng theo
-          truyền thuyết và dã sử cho rằng bắt đầu từ năm 2879 TCN, là niên đại
-          của Kinh Dương Vương, với quốc hiệu Xích Quỷ. Lãnh thổ của quốc gia
-          dưới thời Kinh Dương vương rộng lớn, phía bắc tới sông Dương Tử (cả
-          vùng hồ Động Đình), phía nam tới nước Hồ Tôn (Chiêm Thành), phía đông
-          là Đông Hải (một phần của Thái Bình Dương), phía tây là Ba Thục (Tứ
-          Xuyên, Trung Hoa ngày nay). Về sau người Việt chỉ thấy có ở miền Bắc
-          Việt Nam ngày nay, có thể một phần do sự lấn áp của các tộc người Hoa
-          Hạ từ phương Bắc.
+        {lessonContent?.content}
         </span>
       </div>
       <Divider/>
       <div className="lesson-section-button">
-        <Button>Hoàn thành bài học</Button>
+        <Button onClick={() => completeLesson()}>Hoàn thành bài học</Button>
       </div>
     </div>
   );

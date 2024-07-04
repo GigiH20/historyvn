@@ -10,7 +10,7 @@ import {
 } from "../../service/course";
 import { ICourse } from "../../type/ICourse";
 import { IChapter, ILesson } from "../../type/IChapter";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   ClockCircleTwoTone,
   ContainerTwoTone,
@@ -18,6 +18,7 @@ import {
   DollarTwoTone,
 } from "@ant-design/icons";
 import { getChapterByCourseID } from "../../service/chapter";
+import {getQuestionByCourseId} from "../../service/exam"
 interface Props {}
 const LessonCourse: React.FC<Props> = () => {
   const [course, setCourse] = useState<ICourse | null>(null);
@@ -26,6 +27,7 @@ const LessonCourse: React.FC<Props> = () => {
   const [imgUrl, setImgUrl] = useState<string>("");
 
   const { id } = useParams();
+  const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
@@ -33,9 +35,10 @@ const LessonCourse: React.FC<Props> = () => {
     fetchChapterByCourseID();
   }, []);
 
+  let value = Number(id);
   const fetchCourseByID = async () => {
     console.log("[course param]", id);
-    let value = Number(id);
+    // let value = Number(id);
     try {
       const fetchCourse = await getCourseById(value);
       const course = fetchCourse.data;
@@ -126,6 +129,30 @@ const LessonCourse: React.FC<Props> = () => {
       </div>
       {chapter &&
         chapter.map((item, index) => <ItemCard key={index} data={item} />)}
+      <div className="item-card-wrapper">
+        <div className="item-card-content">
+          <div className="ordinal-test-number">
+            <span>{1 + (chapter?.length ?? 0)}</span>
+          </div>
+          <div className="item-card-title">
+            <span>Bạn đã sẵn sàng với bài kiểm tra...</span>
+          </div>
+          <Button className="story-card-wrapper" onClick={() => navigate(`/course/${id}/test`)}>
+            <div className="story-title">
+              <div className="title">
+                <h3>Bài kiểm tra</h3>
+              </div>
+              <div className="lesson-order">
+                <span>Trắc nghiệm -{course?.QuizzesCount} câu hỏi</span>
+              </div>
+            </div>
+            <div className="duration">
+              {/* <ClockCircleOutlined/>&nbsp;10 minutes */}
+              <span>{course?.duration_quiz} phút</span>
+            </div>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

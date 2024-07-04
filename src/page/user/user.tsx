@@ -1,16 +1,23 @@
 import React from "react";
+import { IUser } from "../../type/IUser";
+import "./index.css";
 
-interface Props {}
+interface Props {
+  account: IUser | null;
+}
 
-const UserAvatar = ({ src }: { src: string }) => {
+const UserAvatar: React.FC = () => {
   return (
     <div className="avatar-user">
-      <img src={src} />
+      <img src="../../user_avatar.png" />
     </div>
   );
 };
 
-const UserInfo = ({account}:any) => {
+const UserInfo: React.FC<{ account: IUser | null }> = ({ account }) => {
+  if (!account) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="user-info">
       <ul className="info">
@@ -21,20 +28,18 @@ const UserInfo = ({account}:any) => {
         <li>Địa chỉ ví: {account.address}</li>
         <li>Phần thưởng đã nhận: {account.balance} LH</li>
         <li>Danh hiệu: Thám Hoa</li>
-        <li>Hạng 1/1 người học</li>
+        <li>Hạng {account.rank} người học</li>
       </ul>
     </div>
   );
 };
 
-const UserOveral = ({account}:any) => {
+const UserOveral: React.FC<Props> = ({ account }) => {
   return (
-    <>
-      <div className="user-info-wrapper">
-        <UserAvatar src={account.avatar} />
-        <UserInfo account = {account}></UserInfo>
-      </div>
-    </>
+    <div className="user-info-wrapper">
+      <UserAvatar />
+      <UserInfo account={account} />
+    </div>
   );
 };
 

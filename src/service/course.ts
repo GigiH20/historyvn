@@ -147,3 +147,26 @@ export const userEnrolledCourse = async (info: any): Promise<any> => {
     throw error;
   }
 };
+
+export const getCourseByUserId = async (): Promise<any> => {
+  try {
+    const response = await fetch(`${prefixApi}/courses/enrolled`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${token}`,
+      },
+    });
+
+    const responseData = await response.json();
+    let { code, data, status } = responseData;
+
+    if (code !== 200) {
+      return Promise.reject(data.errors);
+    } else {
+      return responseData;
+    }
+  } catch (error) {
+    throw error;
+  }
+};

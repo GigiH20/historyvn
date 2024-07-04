@@ -60,7 +60,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/course" element={<CoursePage />} />
               <Route path="/course/:id" element={<LessonCourse />} />
-              <Route path="/course/:id/lesson:lid" element={<LessContent/>}/>
+              <Route path="/course/:id/lesson/:lid" element={<LessContent/>}/>
               <Route path="/course/:id/test" element={<Test />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/share" element={<SharePage />}></Route>
