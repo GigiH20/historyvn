@@ -12,7 +12,7 @@ const CharaterCard: React.FC<Props> = (props) => {
     const navigate = useNavigate();
     let {data} = props
   return (
-    <Button className="story-card-wrapper" onClick={() =>navigate(`/course/nha-ho/test`) }>
+    <Button className="story-card-wrapper" onClick={() =>navigate(`/course//test`) }>
       <div className="story-title">
         <div className="title">
             <h3>{data?.title}</h3>
