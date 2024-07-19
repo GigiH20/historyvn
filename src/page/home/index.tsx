@@ -6,7 +6,7 @@ import Lesson from "./lesson";
 import Post from "./post";
 import Rank from "../../component/rank";
 import { useSDK } from "@metamask/sdk-react";
-import {getAllCourse} from "../../service/course";
+import {getTop4Course} from "../../service/course";
 import { useNavigate } from "react-router-dom";
 import { ICourse } from "../../type/ICourse";
 
@@ -16,19 +16,23 @@ const HomePage: React.FC<Props> = () => {
   const navigate = useNavigate()
   const { sdk, connected, connecting,account, provider, chainId} = useSDK();
   const [course, setCourse] = useState<ICourse[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     fetchAllCourse();
   }, []);
   const fetchAllCourse = async () => {
     try {
-      const fetchCourses = await getAllCourse();
+      const fetchCourses = await getTop4Course();
       const courses =  fetchCourses.data;
       console.log('[course at get func]', courses);
       setCourse(courses);
     } catch (error) {
       console.error("Error fetching courses: ", error);
     }
+  };
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
   };
   const buttonClearJWT = () => { 
     const token = localStorage.removeItem("cjwt");
@@ -52,7 +56,7 @@ const HomePage: React.FC<Props> = () => {
         </div>
       </div>
       <div className="content-home">
-            <SearchComp className="search-comp"/>
+            <SearchComp onSearch={handleSearch}/>
             <Lesson data = {course}/>
             <Post/>
             <Rank/>

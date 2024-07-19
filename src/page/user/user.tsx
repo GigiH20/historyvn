@@ -27,8 +27,7 @@ const UserInfo: React.FC<{ account: IUser | null }> = ({ account }) => {
         </li>
         <li>Địa chỉ ví: {account.address}</li>
         <li>Phần thưởng đã nhận: {account.balance} LH</li>
-        <li>Danh hiệu: Thám Hoa</li>
-        <li>Hạng {account.rank} người học</li>
+        <li>Hạng {account.rank} / {account.LastRank}</li>
       </ul>
     </div>
   );

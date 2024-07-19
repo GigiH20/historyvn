@@ -19,3 +19,10 @@
         border-radius: 50px;
     }
   }
+
+  .content-and-footer-container {
+    display: flex;
+    flex-direction: column;  /* Stack content vertically */
+    min-height: 100vh;        /* Ensure container takes up full viewport height */
+  }
+  

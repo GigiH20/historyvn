@@ -85,6 +85,7 @@ let account = JSON.parse(localAccount);
           {account.last_name} {account.first_name}
         </div>
       </Header>
+      <div className="content-and-footer-container">
       <Content>
         <div
           style={{
@@ -161,6 +162,7 @@ let account = JSON.parse(localAccount);
         <Divider style={{ margin: "20px 0", borderColor: "rgba(0, 0, 0, 0.1)" }} />
         © 2024. All rights reserved.
       </Footer>
+      </div>
     </Layout>
   );
 };

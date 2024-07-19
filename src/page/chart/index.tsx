@@ -26,6 +26,7 @@ const ListRank: React.FC<{ data: IUserRanking[] }> = ({ data }) => {
           description={
             <>
                 <h3> Sĩ tử {item.first_name} {item.last_name}</h3>
+                <h3> Địa chỉ ví {item.address}</h3>
             </>
           }
             />

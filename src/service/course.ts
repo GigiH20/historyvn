@@ -88,6 +88,43 @@ export const getAllCourseByCategory = async (info: any): Promise<any> => {
     });
 };
 
+export const getByKeyword = async (info: any): Promise<any> => {
+  return fetch(`${prefixApi}/courses/${info}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((responseData) => {
+      let { code, status, data } = responseData;
+      if (code !== 200) {
+        return status;
+      } else {
+        return responseData;
+      }
+    });
+};
+
+export const getTop4Course = async (): Promise<any> => {
+  return fetch(`${prefixApi}/courses/special`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json()
+    .then((responseData) => {
+      let { code, status, data } = responseData;
+      if (code !== 200) {
+        return status;
+      } else {
+        return responseData;
+      }
+    }))
+    .catch(error => {throw error});
+};
+
 export const getImgByCourseId = async (info: any): Promise<any> => {
   return fetch(`${prefixApi}/courses/img/${info}`, {
     method: "GET",

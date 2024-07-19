@@ -1,52 +1,94 @@
-import React from "react";
-import { Button, Card, Space } from "antd";
+import React, { useState, useEffect } from "react";
+import { Avatar, Button, Card, Space, Typography } from "antd";
+import { ICourse } from "../../../type/ICourse";
+import { getImgByCourseId } from "../../../service/course";
+import { useNavigate } from 'react-router-dom';
+import { ILesson } from "../../../type/IChapter";
 
-interface Props {}
-const HistorySection: React.FC<Props> = () => {
+const { Meta } = Card;
+interface Props {
+  data: ICourse;
+  data1?: ILesson;
+}
+
+const { Paragraph, Text } = Typography;
+
+const HistorySection = (props: Props) => {
+  const navigate = useNavigate();
+  let { data } = props;
+  let {
+    DurationToLearn,
+    HashCourse,
+    LessonsCount,
+    QuizzesCount,
+    author_id,
+    category,
+    description,
+    duration_quiz,
+    id,
+    price,
+    reward,
+    title,
+    type,
+    users_enrolled,
+  } = data;
+  
+  const [imgUrls, setImgUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchImgsByCourseId = async (id: number) => {
+      try {
+        const fetchImg = await getImgByCourseId(id);
+        const imgs = fetchImg.data.slice(1, 4).map((img: any) => {
+          const idPart = img.image_alt.split('id=')[1];
+          return `https://drive.google.com/thumbnail?id=${idPart}`;
+        });
+        setImgUrls(imgs);
+      } catch (error) {
+        console.error("Error fetching courses: ", error);
+      }
+    };
+
+    fetchImgsByCourseId(id);
+  }, [id]);
+
   return (
-    <Card title="Nhà Hồ" className="hs-wrapper">
+    <Card title={title} className="hs-wrapper">
       <div className="row-1">
         <div className="description">
-          Nhà Hồ bắt đầu khi Hồ Quý Ly lên ngôi năm 1400 sau khi giành được
-          quyền lực từ tay nhà Trần và chấm dứt khi Hồ Hán Thương bị
-          quân Minh bắt vào năm 1407 – tổng cộng là 7 năm. Quốc hiệu Đại Việt đã
-          đổi thành Đại Ngu năm 1400.
+          {description}
         </div>
         <div>
-          <Button>Học ngay</Button>
+          <Button block onClick={() => navigate(`/course/${id}`)}>Học ngay</Button>
         </div>
       </div>
       <div className="row-2">
-        <img src="../courseimg1.png" alt="Course 1" className="course-image" />
-        <img src="../courseImg2.png" alt="Course 2" className="course-image" />
-        <img src="../courseImg3.png" alt="Course 3" className="course-image" />
+        {imgUrls.map((imgUrl, index) => (
+          <img key={index} src={imgUrl} alt={`Course ${index + 1}`} className="course-image" />
+        ))}
       </div>
       <div className="row-3">
         <Space>
-          <Button>4 giờ học</Button>
-          <Button>Hội</Button>
-          <Button>Thu thập 2LH</Button>
-          <Button>Thời kỳ xây dựng nền tự chủ </Button>
+          <Button>{DurationToLearn} giờ học</Button>
+          <Button>{type}</Button>
+          <Button>Thu thập {reward} LH</Button>
+          <Button>{category}</Button>
         </Space>
-        <div className="price">Free</div>
+        <div className="price">{price === 0 ? "Free" : `${price} LINK Token`}</div>
       </div>
-      <Card type="inner" title="Nội dung" style={{ backgroundColor: 'white', marginTop: '20px'}}>
+      <Card type="inner" title="Nội dung" style={{ backgroundColor: 'white', marginTop: '20px' }}>
         <div className="inner-wrapper">
           <div className="content-element">
             <div className="number">01</div>
-            <div>Tổng quan về nhà Hồ</div>
+            <div>Tổng quan</div>
           </div>
           <div className="content-element">
             <div className="number">02</div>
-            <div>Tổng quan về nhà Hồ</div>
+            <div>Nhân vật lịch sử</div>
           </div>
           <div className="content-element">
             <div className="number">03</div>
-            <div>Tổng quan về nhà Hồ</div>
-          </div>
-          <div className="content-element">
-            <div className="number">04</div>
-            <div>Tổng quan về nhà Hồ</div>
+            <div>Sự kiện lịch sử</div>
           </div>
         </div>
       </Card>

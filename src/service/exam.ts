@@ -68,6 +68,27 @@ export const getQuestionByCourseId = async (info: any): Promise<any> => {
   }
 };
 
+export const rewardUsers = async (): Promise<any> => {
+  try {
+    const response = await fetch(`${prefixApi}/history-reward/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": ` ${token}`,
+      },
+    });
+    const responseData = await response.json();
+    let { code, data, status } = responseData;
+    if (code !== 200) {
+      return Promise.reject(data.errors);
+    } else {
+      return responseData;
+    }
+  } catch (error){
+    throw error;
+  }
+};
+
 export const getExamResult = async (info: any): Promise<any> => {
   let {courseId, body} = info
   console.log('[body exam]', JSON.stringify(body))
@@ -112,3 +133,50 @@ export const rankUsers = async (): Promise<any> => {
     throw error;
   }
 };
+
+export const getResultByUserId = async(info:any):Promise<any> => { 
+  return fetch(`${prefixApi}/c/${info}/result-exam`,{ 
+      method: "GET",
+      headers: { 
+             "Content-Type": "application/json",
+             "Authorization": `${token}`,
+
+      },
+  })
+  .then((response) => response.json())
+  .then((responseData) => { 
+      let { code, status, data} = responseData;
+      if (code !== 200) { 
+          return status;
+      } else { 
+          return responseData;
+      }
+  })
+  .catch(error => { 
+      throw (error)
+  })
+}
+
+export const getCertById = async(info:any):Promise<any> => { 
+  return fetch(`${prefixApi}/course-certificate/certificate/${info}`,{ 
+      method: "GET",
+      headers: { 
+             "Content-Type": "application/json",
+             "Authorization": `${token}`,
+
+      },
+  })
+  .then((response) => response.json())
+  .then((responseData) => { 
+      let { code, status, data} = responseData;
+      if (code !== 200) { 
+          return status;
+      } else { 
+          return responseData;
+      }
+  })
+  .catch(error => { 
+      throw (error)
+  })
+}
+

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import {ethers} from 'ethers';
+import {contractAbi, contractAddress} from '../../assets/contracts/LinkTokenABI';
 import "./index.css";
 import TitleLesson from "./titleLesson";
 import { Divider, Button, Space, notification } from "antd";
@@ -62,6 +64,9 @@ const LessonCourse: React.FC<Props> = () => {
     };
     fetchImgByCourseId(id);
   }, [id]);
+  function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   const fetchChapterByCourseID = async () => {
     console.log("[course param]", id);
@@ -78,6 +83,30 @@ const LessonCourse: React.FC<Props> = () => {
   const enrolledCourse = async (value: any) => {
     console.log("[value enroll]", value);
     try {
+      if (course?.price ?? 0 > 0) {
+        if (window.ethereum) {
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+          
+          const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer);
+          console.log("contract", contractInstance)
+          const reward = course?.price ?? 0; // Use 0 if course.reward is undefined or null
+          const result = 100000000 * reward;
+          const name = await contractInstance.approve(ethers.getAddress("0x25eaa81E1a3da566e30f51c3e9b6cbC1c0667df2") , result )
+          console.log("contract", name)
+          const receipt = await name.wait();
+          if (receipt.status === 1) {
+            await delay(3000);
+            const name2 = await contractInstance.allowance(await signer.getAddress(), ethers.getAddress("0x25eaa81E1a3da566e30f51c3e9b6cbC1c0667df2"))            
+          console.log("contract", name2)
+            
+            
+          }
+      } else {
+          console.error('MetaMask extension not detected');
+      }
+      }
       await userEnrolledCourse(value);
       api.open({
         message: "Success",

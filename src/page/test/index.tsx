@@ -167,19 +167,25 @@ const Test: React.FC = () => {
           </div>
         ) : (
           <div className="result">
-            <h3>Result</h3>
+            <h3>Kết quả</h3>
             <div className="result-detail">
               <p>
-                Total Score:<span> {result.score}</span>
+              Điểm số:<span> {result.score} / 10</span>
               </p>
               <p>
-              Địa chỉ nhận thưởng: <span>{result?.reward_address === "" ? "Rất tiếc bạn đã không hoàn thành khóa học ":  result?.reward_address}</span>
+              Địa chỉ nhận thưởng: <span>{result?.reward_address === "" ? "_ Rất tiếc bạn đã không hoàn thành khóa học ":  result?.reward_address}</span>
+              </p>                
+              <p>
+              Số hiệu chứng chỉ: <span>{result?.certificate_id  === 0 ? "_":  result?.certificate_id}</span>
               </p>
               <p>
-              Số hiệu chứng chỉ: <span>{result?.certificate_id  === 0 ? "Rất tiếc bạn đã không hoàn thành khóa học ":  result?.certificate_id}</span>
+              Địa chỉ hợp đồng chứng chỉ NFT: <span>{result?.certificate_id  === 0 ? "_":  "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"}</span>
               </p>
             </div>
-            <button onClick={onCLickRestart}>Restart</button>
+            <button style = {{display: "flex", alignItems: "center" }}onClick={onCLickRestart}>Làm lại</button>
+            <p>
+              Lưu ý: phần thưởng và chứng nhận khóa học chỉ được trao khi bạn hoàn thành bài thi lần đầu, bạn vẫn có thể luyện tập thêm các câu hỏi ở các lượt khác
+              </p>
           </div>
         )}
       </div>

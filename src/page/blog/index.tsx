@@ -51,7 +51,6 @@ const Blog = () => {
   };
   return (
     <div className="blog-wrapper">
-      <SearchComp />
       <div className="blog-section">
         <BlogTabs></BlogTabs>
       </div>
